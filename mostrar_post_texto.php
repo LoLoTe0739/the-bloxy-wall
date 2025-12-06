@@ -2,15 +2,11 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: text/html; charset=UTF-8");
 
-// Recibir texto plano enviado por Roblox
 $text = file_get_contents("php://input");
-
-// Si no hay texto, poner un mensaje por defecto
 if (!$text || trim($text) === "") {
     $text = "No se recibió texto";
 }
 
-// Mostrarlo gigante
 echo "<!DOCTYPE html>
 <html>
 <head>
@@ -23,3 +19,4 @@ echo "<!DOCTYPE html>
     </div>
 </body>
 </html>";
+?>
