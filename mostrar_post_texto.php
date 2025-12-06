@@ -1,50 +1,25 @@
 <?php
-$text = '';
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: text/html; charset=UTF-8");
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['text'])) {
-        $text = $_POST['text'];
-    } else {
-        $raw = file_get_contents('php://input');
-        $ct = strtolower($_SERVER['CONTENT_TYPE'] ?? '');
+// Recibir texto plano enviado por Roblox
+$text = file_get_contents("php://input");
 
-        if (strpos($ct, 'application/json') !== false) {
-            $data = json_decode($raw, true);
-            $text = $data['text'] ?? $raw;
-        } else {
-            $text = $raw;
-        }
-    }
+// Si no hay texto, poner un mensaje por defecto
+if (!$text || trim($text) === "") {
+    $text = "No se recibió texto";
 }
 
-function esc($s) {
-    return htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
-}
-?>
-<!DOCTYPE html>
+// Mostrarlo gigante
+echo "<!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>The Bloxy Wall</title>
-<style>
-  body { 
-    background:#111; color:white; font-family:sans-serif;
-    display:flex; justify-content:center; align-items:center;
-    height:100vh; padding:20px; text-align:center;
-  }
-  .big {
-    font-size: clamp(2rem, 12vw, 12rem);
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    line-height: 0.9;
-  }
-</style>
+    <meta charset='UTF-8'>
+    <title>Mensaje recibido</title>
 </head>
-<body>
-  <?php if ($text): ?>
-    <div class="big"><?= nl2br(esc($text)) ?></div>
-  <?php else: ?>
-    <h1>Send text here lol</h1>
-  <?php endif; ?>
+<body style='background: #111; color: white; display:flex; justify-content:center; align-items:center; height:100vh;'>
+    <div style='font-size:90px; text-align:center; font-family:Arial, sans-serif;'>
+        $text
+    </div>
 </body>
-</html>
+</html>";
