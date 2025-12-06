@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: bloxy-wall
+    name: php-wall
     env: docker
     plan: free
     autoDeploy: true
